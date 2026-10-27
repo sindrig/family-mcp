@@ -16,8 +16,8 @@
     "format:check": "oxfmt -c ../../.oxfmtrc.json --check ."
   },
   "dependencies": {
-    "@modelcontextprotocol/server": "^2.0.0",
-    "zod": "^4.0.0"
+    "@modelcontextprotocol/server": "^2.4.0",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@family-mcp/oxlint-anti-slop": "workspace:*",

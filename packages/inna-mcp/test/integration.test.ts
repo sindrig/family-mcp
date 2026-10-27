@@ -2120,11 +2120,16 @@ test('a broken output pipe under the real stdio runtime cancels the timer and ab
     process.stdout.emit('error', new Error('Synthetic broken output pipe'));
     await turn(0);
     seen.aborted.push(live.aborted, process.stdout.listenerCount('error'));
+    // SDK 2.4 retains its own handler after close to absorb late EPIPE errors.
+    // The scheduler must remove its listener and never restart the cancelled tick.
+    process.stdout.emit('error', new Error('Synthetic late broken output pipe'));
+    tick();
+    await turn(0);
     await finish();
   `);
 
   expect(probe.stderr).toBe(
-    '{"instances":1,"timers":1,"cancelled":1,"calls":[1],"aborted":[false,true,0]}',
+    '{"instances":1,"timers":1,"cancelled":1,"calls":[1],"aborted":[false,true,1]}',
   );
   expect(probe.code).toBe(0);
 });
