@@ -25,6 +25,7 @@ export async function renderInstall(pkg) {
 
   const replacements = {
     NAME: pkg.name,
+    REPOSITORY: pkg.familyMcp.release.repository,
     SHORT: pkg.name.replace('-mcp', ''),
     ENV: pkg.envPrefix,
     VERSION: pkg.version,

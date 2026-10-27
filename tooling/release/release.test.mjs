@@ -19,7 +19,15 @@ const packageNames = PACKAGE_NAMES;
 await test('release package constants stay pinned', () => {
   assert.deepEqual(
     [...PACKAGE_NAMES],
-    ['abler-mcp', 'infomentor-mcp', 'inna-mcp', 'kronan-mcp', 'dominos-mcp', 'vedur-mcp'],
+    [
+      'abler-mcp',
+      'infomentor-mcp',
+      'inna-mcp',
+      'kronan-mcp',
+      'dominos-mcp',
+      'vedur-mcp',
+      'rjupa-mcp',
+    ],
   );
   assert.deepEqual(DOCUMENTATION_FILES, {
     'abler-mcp': ['docs/AGENTS.md', 'docs/PUBLISHING.md'],
@@ -28,6 +36,7 @@ await test('release package constants stay pinned', () => {
     'kronan-mcp': ['docs/RELEASING.md'],
     'dominos-mcp': ['docs/RELEASING.md'],
     'vedur-mcp': ['docs/RELEASING.md'],
+    'rjupa-mcp': ['docs/RELEASING.md'],
   });
 });
 
@@ -251,7 +260,7 @@ await test('shared source changes invalidate server quality task hashes', async 
 
     // vedur-mcp has no TypeScript sources, so it has no test, typecheck or lint task.
     const qualityTaskIds = packageNames
-      .filter((name) => name !== 'vedur-mcp')
+      .filter((name) => !['vedur-mcp', 'rjupa-mcp'].includes(name))
       .flatMap((name) => ['test', 'typecheck', 'lint'].map((task) => `${name}#${task}`));
 
     const releaseTaskIds = packageNames.map((name) => `${name}#release:check`);
@@ -428,6 +437,43 @@ await test('Turbo release synchronization preserves root README pins', async () 
     assert.match(output, /abler-mcp@1\.2\.4\/packages\/abler-mcp\/install\.sh/);
     assert.match(output, /infomentor-mcp@4\.5\.7\/packages\/infomentor-mcp\/install\.sh/);
     assert.match(output, /kronan-mcp@7\.8\.10\/packages\/kronan-mcp\/install\.sh/);
+  } finally {
+    await rm(directory, { recursive: true, force: true });
+  }
+});
+
+await test('a fork package installer and version pins use its explicit repository', async () => {
+  const directory = await mkdtemp(join(tmpdir(), 'family-fork-release-'));
+
+  try {
+    const manifest = {
+      name: 'rjupa-mcp',
+      version: '9.8.7',
+      packageManager: 'bun@1.4.2',
+      familyMcp: { release: { repository: 'sindrig/family-mcp', tools: ['get_degree_days'] } },
+    };
+
+    await mkdir(join(directory, 'docs'));
+    await writeFile(join(directory, 'package.json'), JSON.stringify(manifest));
+
+    const stale =
+      'https://raw.githubusercontent.com/sindrig/family-mcp/rjupa-mcp@0.1.0/packages/rjupa-mcp/install.sh\nhttps://github.com/sindrig/family-mcp/releases/tag/rjupa-mcp@0.1.0\n';
+
+    for (const file of ['README.md', 'docs/RELEASING.md'])
+      await writeFile(join(directory, file), stale);
+    const sync = fileURLToPath(new URL('./sync-version.mjs', import.meta.url));
+
+    const result = spawnSync(process.execPath, [sync, '--package', directory], {
+      encoding: 'utf8',
+    });
+
+    assert.equal(result.status, 0, result.stderr);
+    const installer = await readFile(join(directory, 'install.sh'), 'utf8');
+    assert.ok(installer.includes('https://github.com/sindrig/family-mcp/releases/download/'));
+    assert.ok(!installer.includes('olafurns7/family-mcp'));
+    const readme = await readFile(join(directory, 'README.md'), 'utf8');
+    assert.ok(readme.includes('sindrig/family-mcp/rjupa-mcp@9.8.7/'));
+    assert.ok(readme.includes('sindrig/family-mcp/releases/tag/rjupa-mcp@9.8.7'));
   } finally {
     await rm(directory, { recursive: true, force: true });
   }

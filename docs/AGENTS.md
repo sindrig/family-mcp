@@ -211,6 +211,20 @@ attendance state from a failed request or undocumented value.
 null` means no recent report, not calm or dry weather.
 - Results are cached for at least 60 seconds; avoid polling faster than that.
 
+### Rjúpa
+
+- Read [the reminder workflow](../packages/rjupa-mcp/README.md#assistant-reminder-workflow).
+  The tool does not schedule or send messages and stores no batch state. The host
+  must persist the batch date, selected approximate location, active flag and
+  delivered cursor privately. Date-only input means UTC midnight.
+- Poll no faster than hourly. Deliver 35, 40, then every 5 °C·day milestone;
+  acknowledge only after confirmed delivery. Reconcile an unknown send outcome.
+- `reminders_ready: false` and null pending thresholds mean unknown, never none.
+  Failed/partial checks must not advance the cursor. Preserve quality and quote
+  attribution, including Veðurstofa Íslands, and `fetched_at`.
+- Stop the batch and cancel its job when the user says it is taken down. Do not
+  infer a new recipient or expose a private batch to another channel.
+
 ## Working on this repository
 
 Read [CLAUDE.md](../CLAUDE.md) for commands, package layout, conventions, and

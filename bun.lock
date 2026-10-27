@@ -14,7 +14,7 @@
     },
     "packages/abler-mcp": {
       "name": "abler-mcp",
-      "version": "0.6.0",
+      "version": "0.7.2",
       "bin": {
         "abler-mcp": "dist/cli.js",
       },
@@ -35,7 +35,7 @@
     },
     "packages/dominos-mcp": {
       "name": "dominos-mcp",
-      "version": "0.1.0",
+      "version": "0.2.1",
       "dependencies": {
         "@family-mcp/mcp-runtime": "workspace:^",
         "@family-mcp/session-store": "workspace:*",
@@ -52,7 +52,7 @@
     },
     "packages/infomentor-mcp": {
       "name": "infomentor-mcp",
-      "version": "0.8.0",
+      "version": "0.9.5",
       "dependencies": {
         "@family-mcp/mcp-runtime": "workspace:^",
         "@family-mcp/session-store": "workspace:*",
@@ -72,7 +72,7 @@
     },
     "packages/inna-mcp": {
       "name": "inna-mcp",
-      "version": "0.3.0",
+      "version": "0.6.0",
       "dependencies": {
         "@family-mcp/mcp-runtime": "workspace:^",
         "@family-mcp/session-store": "workspace:*",
@@ -92,7 +92,7 @@
     },
     "packages/kronan-mcp": {
       "name": "kronan-mcp",
-      "version": "0.2.0",
+      "version": "0.3.2",
       "dependencies": {
         "@family-mcp/mcp-runtime": "workspace:^",
         "@family-mcp/session-store": "workspace:*",
@@ -120,6 +120,13 @@
         "@types/bun": "^1.2.19",
       },
     },
+    "packages/rjupa-mcp": {
+      "name": "rjupa-mcp",
+      "version": "0.1.0",
+      "devDependencies": {
+        "@family-mcp/release-tooling": "workspace:*",
+      },
+    },
     "packages/session-store": {
       "name": "@family-mcp/session-store",
       "version": "0.0.0",
@@ -131,7 +138,7 @@
     },
     "packages/vedur-mcp": {
       "name": "vedur-mcp",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "devDependencies": {
         "@family-mcp/release-tooling": "workspace:*",
       },
@@ -377,6 +384,8 @@
     "path-key": ["path-key@3.1.1", "", {}, "sha512-ojmeN0qd+y0jszEtoY48r0Peq5dwMEkIlCOu6Q5f41lfkswXuKtYrhgoTpLnyIcHm24Uhqx+5Tqm2InSwLhE6Q=="],
 
     "pkce-challenge": ["pkce-challenge@5.0.1", "", {}, "sha512-wQ0b/W4Fr01qtpHlqSqspcj3EhBvimsdh0KlHhH8HRZnMsEa0ea2fTULOXOS9ccQr3om+GcGRk4e+isrZWV8qQ=="],
+
+    "rjupa-mcp": ["rjupa-mcp@workspace:packages/rjupa-mcp"],
 
     "shebang-command": ["shebang-command@2.0.0", "", { "dependencies": { "shebang-regex": "^3.0.0" } }, "sha512-kHxr2zZpYtdmrN1qDjrrX/Z1rR1kG8Dx+gkpK1G4eXmvXswmcE1hTWBWYUzlraYw1/yZp6YuDY77YtvbN0dmDA=="],
 

@@ -13,7 +13,7 @@ const pkg = await readPackage(values.package);
 
 const tag = `${pkg.name}@${pkg.version}`;
 
-const installUrl = `https://raw.githubusercontent.com/olafurns7/family-mcp/${tag}/packages/${pkg.name}/install.sh`;
+const installUrl = `https://raw.githubusercontent.com/${pkg.familyMcp.release.repository}/${tag}/packages/${pkg.name}/install.sh`;
 
 const files = ['README.md', ...DOCUMENTATION_FILES[pkg.name]].map((file) => join(pkg.root, file));
 
@@ -23,17 +23,17 @@ for (const file of files) {
   let text = await readFile(file, 'utf8');
   text = text.replace(
     new RegExp(
-      `https://raw\\.githubusercontent\\.com/olafurns7/(?:${pkg.name}/[^/]+|family-mcp/[^/]+/packages/${pkg.name})/install\\.sh`,
+      `https://raw\\.githubusercontent\\.com/(?:olafurns7/${pkg.name}/[^/]+|[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+/[^/]+/packages/${pkg.name})/install\\.sh`,
       'g',
     ),
     installUrl,
   );
   text = text.replace(
     new RegExp(
-      `https://github\\.com/olafurns7/(?:${pkg.name}|family-mcp)/releases/tag/[^\\s)\\x60]+`,
+      `https://github\\.com/(?:olafurns7/${pkg.name}|${pkg.familyMcp.release.repository.replaceAll('.', '\\.')}|olafurns7/family-mcp)/releases/tag/[^\\s)\\x60]+`,
       'g',
     ),
-    `https://github.com/olafurns7/family-mcp/releases/tag/${tag}`,
+    `https://github.com/${pkg.familyMcp.release.repository}/releases/tag/${tag}`,
   );
   text = text.replace(
     new RegExp(`${pkg.name}@\\d+\\.\\d+\\.\\d+(?:-[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?`, 'g'),

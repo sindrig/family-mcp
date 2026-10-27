@@ -172,6 +172,14 @@ export async function smoke(bin, expectedTools, version, standalone, packageName
       assert.equal(error.structuredContent, undefined);
     }
 
+    if (packageName === 'rjupa-mcp') {
+      assert.ok(tools.every((tool) => tool.annotations?.readOnlyHint === true));
+      assert.match(client.getInstructions() ?? '', /never an empty result/);
+      const error = await client.callTool({ name: 'get_degree_days', arguments: {} });
+      assert.equal(error.isError, true);
+      assert.equal(error.structuredContent, undefined);
+    }
+
     if (packageName === 'infomentor-mcp') {
       assert.ok(tools.every((tool) => tool.outputSchema));
       const status = await client.callTool({ name: 'infomentor_session_status', arguments: {} });

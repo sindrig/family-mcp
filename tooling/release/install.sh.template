@@ -132,7 +132,7 @@ n$2/bin/@@NAME@@-warp
   trap 'rm -rf "$temporary"; if [ -n "$staging" ]; then rm -rf "$staging"; fi; if [ -n "$command_tmp" ]; then rm -rf "$command_tmp"; fi' 0
   trap 'exit 1' 1 2 15
   archive="@@NAME@@-$version-$platform-$arch.tar.gz"
-  release="https://github.com/olafurns7/family-mcp/releases/download/@@NAME@@@$version"
+  release="https://github.com/@@REPOSITORY@@/releases/download/@@NAME@@@$version"
   curl --proto '=https' --proto-redir '=https' --tlsv1.2 -fsSL "$release/$archive" -o "$temporary/$archive"
   curl --proto '=https' --proto-redir '=https' --tlsv1.2 -fsSL "$release/$archive.sha256" -o "$temporary/checksum"
   actual=$(cd "$temporary" && $checksum_tool "$archive")
@@ -222,7 +222,7 @@ n$2/bin/@@NAME@@-warp
     fi
   fi
   printf 'Installed @@NAME@@ %s at %s/bin/@@NAME@@\n' "$version" "$prefix"
-  printf 'Use that absolute path in your MCP client. Setup: https://github.com/olafurns7/family-mcp/tree/@@NAME@@@%s/packages/@@NAME@@#readme\n' "$version"
+  printf 'Use that absolute path in your MCP client. Setup: https://github.com/@@REPOSITORY@@/tree/@@NAME@@@%s/packages/@@NAME@@#readme\n' "$version"
   case ":${PATH:-}:" in *":$prefix/bin:"*) ;; *) printf 'For terminal use, add %s/bin to PATH.\n' "$prefix" ;; esac
 }
 

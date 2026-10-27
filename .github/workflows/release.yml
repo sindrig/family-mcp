@@ -10,6 +10,7 @@ on:
         'kronan-mcp@*',
         'dominos-mcp@*',
         'vedur-mcp@*',
+        'rjupa-mcp@*',
       ]
   workflow_dispatch:
 
@@ -34,7 +35,7 @@ jobs:
           import assert from 'node:assert/strict';
           import { appendFileSync, readFileSync } from 'node:fs';
           assert.equal(process.env.REF_TYPE, 'tag', 'Select an existing package release tag.');
-          const match = /^(abler-mcp|infomentor-mcp|inna-mcp|kronan-mcp|dominos-mcp|vedur-mcp)@(\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?)$/.exec(process.env.RELEASE_TAG);
+          const match = /^(abler-mcp|infomentor-mcp|inna-mcp|kronan-mcp|dominos-mcp|vedur-mcp|rjupa-mcp)@(\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?)$/.exec(process.env.RELEASE_TAG);
           assert.ok(match, 'Use <package>@<version>.');
           const [, name, version] = match;
           const root = `packages/${name}`;
@@ -100,7 +101,7 @@ jobs:
             assert.equal(readFileSync(join(output, `${file}.sha256`), 'utf8').trim(), `${digest}  ${file}`);
           }
           copyFileSync(`packages/${name}/install.sh`, join(output, 'install.sh'));
-          const repo = 'olafurns7/family-mcp';
+          const repo = JSON.parse(readFileSync(`packages/${name}/package.json`, 'utf8')).familyMcp.release.repository ?? 'olafurns7/family-mcp';
           let changelog = '';
           const changelogPath = `packages/${name}/CHANGELOG.md`;
           if (existsSync(changelogPath)) {
