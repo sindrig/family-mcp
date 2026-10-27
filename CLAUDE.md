@@ -27,6 +27,7 @@ Turbo filters when possible. Tests must not contact live services.
 - `packages/kronan-mcp`: Krónan native MCP server: grocery reads, shopping-note and basket edits, and confirmed orders.
 - `packages/dominos-mcp`: Domino’s Iceland menu, SMS login, quotes, and confirmed saved-card payments.
 - `packages/vedur-mcp`: read-only Icelandic weather from Veðurstofa Íslands (IMO): stations, forecasts, observations, warnings; Rust only (`rust/vedur-mcp`).
+- `packages/rjupa-mcp`: read-only ptarmigan hanging degree-days and reminder milestones; Rust only (`rust/rjupa-mcp`).
 - `packages/mcp-runtime`: shared MCP server runtime and safe error boundary.
 - `packages/session-store`: private shared session locking/storage.
 - `tooling/oxlint-anti-slop`: local Oxlint JS-plugin rules.

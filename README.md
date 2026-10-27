@@ -2,7 +2,7 @@
 
 Local MCP servers provide Abler sports schedules and messages, an Icelandic InfoMentor school
 account, Inna school accounts, a Krónan grocery account, Domino’s Iceland ordering, and Icelandic
-weather from Veðurstofa Íslands. Each release
+weather from Veðurstofa Íslands, plus ptarmigan hanging degree-days. Each release
 is a standalone native executable, so the MCP host does not need Node, npm, or Bun
 at runtime.
 
@@ -271,6 +271,16 @@ See [tools, data sources, and attribution](packages/vedur-mcp/README.md). Data c
 from Veðurstofa Íslands (IMO); forecasts use the gottvedur.is site's internal,
 unversioned API, which may change without notice. A failed warning request is an
 error, never “no warnings”.
+
+## Rjúpa
+
+Track ptarmigan hanging degree-days from [rjupa.irdn.is](https://rjupa.irdn.is).
+This new package is unreleased; follow the [build and MCP setup](packages/rjupa-mcp/README.md)
+in this fork. No login is required. Its `get_degree_days` tool returns pending
+milestones at 35, 40, 45, 50… °C·days. The assistant host schedules checks, retains
+per-batch delivery state, and cancels reminders when the birds are taken down.
+Date-only input starts at UTC midnight; an approximate location is also required.
+No reminders are created merely by installing the MCP.
 
 ## Security
 

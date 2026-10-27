@@ -20,13 +20,13 @@ for (const pkg of packages) {
   const tag = `${pkg.name}@${pkg.version}`;
 
   const installUrlPattern = new RegExp(
-    `https://raw\\.githubusercontent\\.com/olafurns7/family-mcp/${pkg.name}@\\d+\\.\\d+\\.\\d+(?:-[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?/packages/${pkg.name}/install\\.sh`,
+    `https://raw\\.githubusercontent\\.com/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+/${pkg.name}@\\d+\\.\\d+\\.\\d+(?:-[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?/packages/${pkg.name}/install\\.sh`,
     'g',
   );
 
   output = output.replaceAll(
     installUrlPattern,
-    `https://raw.githubusercontent.com/olafurns7/family-mcp/${tag}/packages/${pkg.name}/install.sh`,
+    `https://raw.githubusercontent.com/${pkg.familyMcp.release.repository}/${tag}/packages/${pkg.name}/install.sh`,
   );
 }
 

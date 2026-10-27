@@ -16,6 +16,7 @@ export const PACKAGE_NAMES = /** @type {const} */ ([
   'kronan-mcp',
   'dominos-mcp',
   'vedur-mcp',
+  'rjupa-mcp',
 ]);
 
 /** Package documentation files that pin the release version alongside README.md. */
@@ -26,6 +27,7 @@ export const DOCUMENTATION_FILES = /** @type {const} */ ({
   'kronan-mcp': ['docs/RELEASING.md'],
   'dominos-mcp': ['docs/RELEASING.md'],
   'vedur-mcp': ['docs/RELEASING.md'],
+  'rjupa-mcp': ['docs/RELEASING.md'],
 });
 
 const manifestSchema = z.object({
@@ -34,6 +36,10 @@ const manifestSchema = z.object({
   packageManager: z.string().regex(/^bun@\d+\.\d+\.\d+$/),
   familyMcp: z.object({
     release: z.object({
+      repository: z
+        .string()
+        .regex(/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/)
+        .default('olafurns7/family-mcp'),
       tools: z.array(z.string()).nonempty(),
       /** The crate in rust/ that provides the executable; without it, Bun compiles src/cli.ts. */
       rust: z
