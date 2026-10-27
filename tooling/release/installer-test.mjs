@@ -202,7 +202,7 @@ esac
 set -eu
 [ "$TEST_FAILURE" != download ] || exit 22
 while [ "$#" -gt 0 ]; do
-  case "$1" in https://github.com/olafurns7/family-mcp/releases/download/${pkg.name}@${pkg.version}/*) url=$1 ;; -o) shift; output=$1 ;; esac
+  case "$1" in https://github.com/${pkg.familyMcp.release.repository}/releases/download/${pkg.name}@${pkg.version}/*) url=$1 ;; -o) shift; output=$1 ;; esac
   shift
 done
 cp "$TEST_ASSETS/\${url##*/}" "$output"
